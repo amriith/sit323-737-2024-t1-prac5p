@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    image: amriith/node-web-app
+    ports:
+      - '3043:3000'
+        restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+      - PORT=3043
+    container_name: my-app4
+    networks:
+      - my-net
+
+  app1:
+    build: .
+    image: amriith/node-web-app
+    ports:
+      - '3044:3000'
+        restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    environment:
+      - PORT=3044
+    container_name: my-app3
+    networks:
+      - my-net
+
+
+networks:
+  my-net:
+    driver: bridge
+    
